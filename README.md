@@ -47,10 +47,10 @@ Fraudulent transactions cost the global financial industry billions of dollars a
 
 This project builds a supervised machine learning pipeline to predict whether a mobile money transaction is **'Legitimate'** or **'Fraudulent'**. The dataset originates from African mobile money logs and initially contained a massive **6.3 million records**. By focusing on high-risk transaction types (`TRANSFER` and `CASH_OUT`), the analysis evaluates a concentrated subset of **~2.77 million transactions**, addressing a severe class imbalance where frauds (8,213 cases) represent just **0.3%** of the data.
 
-> 📥 **Dataset Access for Reproduction:** Due to its massive size (>400MB), the raw `paysim_dataset.csv` is not hosted directly in this repository. If you want to clone this project and reproduce the code, please **[download the original dataset from Kaggle here](https://www.kaggle.com/datasets/amanalisiddiqui/fraud-detection-dataset?resource=download)** and place it in your root directory.
+> 📥 **Dataset Access for Reproduction:** Due to its massive size (>400MB), the raw `AIML Dataset.csv` is not hosted directly in this repository. If you want to clone this project and reproduce the code, please **[download the original dataset from Kaggle here](https://www.kaggle.com/datasets/amanalisiddiqui/fraud-detection-dataset?resource=download)** and place it in your root directory.
 
 > 🧑‍💻 **Curious about the technical deep dive?**
-> I highly encourage you to check out the **[`nn.ipynb`](nn.ipynb)** notebook! Inside, you will find the complete behind-the-scenes journey: from the Exploratory Data Analysis (EDA) proving why simple business rules fail, to the strict Feature Engineering and the deployment of the Scikit-Learn Pipeline.
+> I highly encourage you to check out the **[`analysis_model.ipynb`](analysis_model.ipynb)** notebook! Inside, you will find the complete behind-the-scenes journey: from the Exploratory Data Analysis (EDA) proving why simple business rules fail, to the strict Feature Engineering and the deployment of the Scikit-Learn Pipeline.
 
 ---
 
@@ -107,8 +107,8 @@ Unlike multiple fragmented encoders, this project encapsulates everything into a
 | Subsystem | Icon | Component | Purpose |
 | :--- | :--- | :--- | :--- |
 | **Unified Core** | 🧠 | `fraud_detection_pipeline.pkl` | Contains the ColumnTransformer (Scalers/Encoders) AND the LogisticRegression model in one secure file. |
-| **Interface Layer** | 💻 | `app.py` | Streamlit logic and UI handling for real-time transaction screening. |
-| **Jupyter Log** | 📓 | `nn.ipynb` | The comprehensive training environment and EDA playground. |
+| **Interface Layer** | 💻 | `fraud_detection.py` | Streamlit logic and UI handling for real-time transaction screening. |
+| **Jupyter Log** | 📓 | `analysis_model.ipynb` | The comprehensive training environment and EDA playground. |
 | **Dependency Map** | 📋 | `requirements.txt` | Environment specification for cloud deployment. |
 
 ---
@@ -118,14 +118,14 @@ Unlike multiple fragmented encoders, this project encapsulates everything into a
 ```text
 FRAUD DETECTION SYSTEM/
  ┃
- ┣ 📄 nn.ipynb                     # Main notebook: EDA, behavior analysis, and Pipeline training
- ┣ 📄 app.py                       # Source code of the real-time Streamlit web interface
- ┣ 📦 fraud_detection_pipeline.pkl # Unified Scikit-Learn Pipeline (Scalers + Encoders + Model)
+ ┣ 📄 analysis_model.ipynb          # Main notebook: EDA, behavior analysis, and Pipeline training
+ ┣ 📄 fraud_detection.py            # Source code of the real-time Streamlit web interface
+ ┣ 📦 fraud_detection_pipeline.pkl  # Unified Scikit-Learn Pipeline (Scalers + Encoders + Model)
  ┃
- ┣ 📊 paysim_dataset.csv           # Original log (Not uploaded due to size, download via Kaggle link above)
+ ┣ 📊 AIML Dataset.csv              # Original log (Not uploaded due to size, download via Kaggle link above)
  ┃
- ┣ 📋 requirements.txt             # Python dependencies required for cloud deployment
- ┗ 📄 README.md                    # Technical and business documentation of the project (this file)
+ ┣ 📋 requirements.txt              # Python dependencies required for cloud deployment
+ ┗ 📄 README.md                     # Technical and business documentation of the project (this file)
 ```
 
 ---
