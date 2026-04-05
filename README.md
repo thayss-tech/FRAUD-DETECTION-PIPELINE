@@ -3,7 +3,7 @@
   <h1>🛡️ Financial Fraud Detection: End-to-End ML Pipeline</h1>
   <p><strong>Predictive Modeling & Real-Time Transaction Screening</strong></p>
   <p>
-    <a href="#" target="_blank">
+    <a href="https://fraud-detection-pipeline-caurmhrkkzzavjpkh6zvrv.streamlit.app/" target="_blank">
       <img src="https://img.shields.io/badge/Streamlit-Live_App-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white" />
     </a>
     <a href="https://github.com/thayss-tech" target="_blank">
@@ -49,7 +49,8 @@ This project builds a supervised machine learning pipeline to predict whether a 
 
 > 📥 **Dataset Access for Reproduction:** Due to its massive size (>400MB), the raw `paysim_dataset.csv` is not hosted directly in this repository. If you want to clone this project and reproduce the code, please **[download the original dataset from Kaggle here](https://www.kaggle.com/datasets/amanalisiddiqui/fraud-detection-dataset?resource=download)** and place it in your root directory.
 
-> 🧑‍💻 **Curious about the technical deep dive?** > I highly encourage you to check out the **[`nn.ipynb`](nn.ipynb)** notebook! Inside, you will find the complete behind-the-scenes journey: from the Exploratory Data Analysis (EDA) proving why simple business rules fail, to the strict Feature Engineering and the deployment of the Scikit-Learn Pipeline.
+> 🧑‍💻 **Curious about the technical deep dive?**
+> I highly encourage you to check out the **[`nn.ipynb`](nn.ipynb)** notebook! Inside, you will find the complete behind-the-scenes journey: from the Exploratory Data Analysis (EDA) proving why simple business rules fail, to the strict Feature Engineering and the deployment of the Scikit-Learn Pipeline.
 
 ---
 
@@ -81,7 +82,9 @@ graph TD
 ```
 
 #### Engineering Principles
+
 * **🛡️ Mathematical Scaling:** Because the dataset uses nominal values from a local African currency, amounts scale up to 92 million. We encapsulated a `StandardScaler` inside the pipeline to normalize these massive variances automatically.
+* **🌍 Market Adaptation (Data Shift):** This model acts as a Proof of Concept (PoC) calibrated specifically to the financial magnitudes of the original dataset. To deploy this architecture in different economic environments (e.g., using USD or BRL), the pipeline simply requires a fine-tuning phase (`pipeline.fit(X_local, y_local)`) with regional data. This allows the internal Scaler to automatically learn the new local means and standard deviations, effortlessly adapting its detection thresholds to any currency's reality.
 * **⚡ No Data Leakage:** Categorical mapping (`OneHotEncoder` with `drop="first"`) and numerical scaling happen strictly inside the Pipeline, meaning test data is never "peeked" at during the training phase.
 * **📊 Multivariate Pattern Recognition:** The EDA revealed that single behaviors (like a balance dropping to zero) are done by 1.2 million legitimate users. The pipeline evaluates the entire combination of variables simultaneously, outperforming simple human-coded business rules.
 
@@ -147,7 +150,7 @@ The predictive engine is deployed via Streamlit Community Cloud, utilizing:
 
 | Type | Link |
 | :--- | :--- |
-| **🌐 Live App** | *(Insert your Streamlit App URL here)* |
+| **🌐 Live App** | [https://fraud-detection-pipeline-caurmhrkkzzavjpkh6zvrv.streamlit.app/](https://fraud-detection-pipeline-caurmhrkkzzavjpkh6zvrv.streamlit.app/) |
 
 ---
 
