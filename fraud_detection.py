@@ -58,7 +58,7 @@ model = load_model()
 
 # --- 4. LOGÓTIPO DO ITAÚ LOCAL ---
 # Definimos el nombre de tu archivo de imagen
-IMAGE_FILENAME = "logo_itau.png"
+IMAGE_FILENAME = "logo 0.png"
 
 # Verificamos si la imagen existe antes de intentar cargarla
 if os.path.exists(IMAGE_FILENAME):
