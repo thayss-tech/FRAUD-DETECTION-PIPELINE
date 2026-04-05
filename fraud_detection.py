@@ -2,27 +2,26 @@ import streamlit as st
 import pandas as pd
 import joblib
 import time
-# Para cargar imágenes locales necesitamos esta librería adicional (ya viene con Python)
 from PIL import Image
 import os
 
-# --- 1. CONFIGURACIÓN DE LA PÁGINA ---
+# --- 1. PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="Portal de Segurança | Itaú",
+    page_title="Security Portal | Thayss Fraud Guard",
     page_icon="🔒",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# --- 2. INYECCIÓN DE CSS (IDENTIDAD ITAÚ) ---
+# --- 2. CSS INJECTION (BRAND IDENTITY) ---
 st.markdown("""
     <style>
-    /* Estilo para los títulos */
+    /* Headers style */
     h1, h2, h3 {
         color: #002A8F !important;
         font-family: 'Arial', sans-serif;
     }
-    /* Estilo del botón principal */
+    /* Main button style */
     div.stButton > button:first-child {
         background-color: #EC7000;
         color: white;
@@ -38,74 +37,79 @@ st.markdown("""
         background-color: #CC6000;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-    /* Separador corporativo */
+    /* Corporate divider */
     hr {
         border-top: 3px solid #EC7000;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 3. CARGAR EL MODELO ---
+# --- 3. LOAD MODEL ---
 @st.cache_resource
 def load_model():
     try:
-        # Asegúrate de que este archivo también esté en la misma carpeta
+        # Ensure this file is in the same directory
         return joblib.load("fraud_detection_pipeline.pkl")
     except FileNotFoundError:
         return None
 
 model = load_model()
 
-# --- 4. LOGÓTIPO MIO ---
-# Definimos el nombre de tu archivo de imagen
+# --- 4. PERSONAL LOGO ---
+# Define your image filename
 IMAGE_FILENAME = "logo c.png"
 
-# Verificamos si la imagen existe antes de intentar cargarla
+# Check if image exists before loading
 if os.path.exists(IMAGE_FILENAME):
     col1, col2, col3 = st.columns([1, 1.5, 1])
     with col2:
         image = Image.open(IMAGE_FILENAME)
         st.image(image, use_container_width=True)
 else:
-    st.error(f"⚠️ No se encontró el archivo de imagen '{IMAGE_FILENAME}' en la carpeta actual.")
+    st.error(f"⚠️ Image file '{IMAGE_FILENAME}' not found in the current directory.")
 
-# --- 5. CABEÇALHO DA APLICAÇÃO ---
-st.markdown("<h2 style='text-align: center;'>Sistema de Deteção de Fraude</h2>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center;'><b>Centro de Operações de Segurança (SOC)</b> | Por favor, insira os detalhes da transação para avaliar o nível de risco.</p>", unsafe_allow_html=True)
+# --- 5. APPLICATION HEADER ---
+st.markdown("<h2 style='text-align: center;'>Fraud Detection System</h2>", unsafe_allow_html=True)
+st.markdown("""
+<p style='text-align: center; color: gray;'>
+    <b>Powered by Advanced Machine Learning</b> | Enter the transaction details below to evaluate the risk level in real-time.
+</p>
+""", unsafe_allow_html=True)
 st.divider()
 
-# --- 6. INTERFACE DE UTILIZADOR (COLUNAS) ---
-st.subheader("Dados da Transação")
+# --- 6. USER INTERFACE (COLUMNS) ---
+st.subheader("Transaction Data")
 col_type, col_amount = st.columns(2)
 
 with col_type:
-    transaction_type = st.selectbox("Tipo de Operação", ["PAYMENT", "TRANSFER", "CASH_OUT", "DEPOSIT"])
+    transaction_type = st.selectbox("Transaction Type", ["PAYMENT", "TRANSFER", "CASH_OUT", "DEPOSIT"])
 with col_amount:
-    amount = st.number_input("Montante (BRL)", min_value=0.0, value=1000.0, step=100.0)
+    # Adjusted ranges to match the original dataset's high monetary magnitudes
+    amount = st.number_input("Amount (Monetary Units)", min_value=0.0, max_value=100000000.0, value=150000.0, step=1000.0)
 
-st.write("") # Espaço em branco
+st.write("") # Blank space
 
 col_orig, col_dest = st.columns(2)
 
 with col_orig:
-    st.markdown("#### 👤 Conta de Origem")
-    oldbalanceOrg = st.number_input("Saldo Anterior (Origem)", min_value=0.0, value=1000.0, step=500.0)
-    newbalanceOrig = st.number_input("Novo Saldo (Origem)", min_value=0.0, value=0.0, step=500.0)
+    st.markdown("#### 👤 Origin Account")
+    oldbalanceOrg = st.number_input("Old Balance (Origin)", min_value=0.0, max_value=100000000.0, value=150000.0, step=1000.0)
+    newbalanceOrig = st.number_input("New Balance (Origin)", min_value=0.0, max_value=100000000.0, value=0.0, step=1000.0)
 
 with col_dest:
-    st.markdown("#### 🏦 Conta de Destino")
-    oldbalanceDest = st.number_input("Saldo Anterior (Destino)", min_value=0.0, value=0.0, step=500.0)
-    newbalanceDest = st.number_input("Novo Saldo (Destino)", min_value=0.0, value=1000.0, step=500.0)
+    st.markdown("#### 🏦 Destination Account")
+    oldbalanceDest = st.number_input("Old Balance (Destination)", min_value=0.0, max_value=100000000.0, value=0.0, step=1000.0)
+    newbalanceDest = st.number_input("New Balance (Destination)", min_value=0.0, max_value=100000000.0, value=150000.0, step=1000.0)
 
 st.write("")
 st.write("")
 
-# --- 7. LÓGICA DE PREVISÃO ---
-if st.button("Analisar Transação"):
+# --- 7. PREDICTION LOGIC ---
+if st.button("Analyze Transaction"):
     if model is None:
-        st.error("⚠️ Erro crítico: Não foi encontrado o ficheiro do modelo ('fraud_detection_pipeline.pkl').")
+        st.error("⚠️ Critical Error: Model file ('fraud_detection_pipeline.pkl') not found.")
     else:
-        with st.spinner("A executar algoritmos de validação de segurança..."):
+        with st.spinner("Running security validation algorithms..."):
             time.sleep(1.5)
             
             input_data = pd.DataFrame([{
@@ -122,14 +126,14 @@ if st.button("Analisar Transação"):
             st.divider()
             
             if prediction == 1:
-                st.error("🚨 **ALERTA DE SEGURANÇA: ALTO RISCO**")
+                st.error("🚨 **SECURITY ALERT: HIGH RISK**")
                 st.markdown("""
-                Os padrões desta operação coincidem com comportamentos fraudulentos. 
-                * **Ação sugerida:** Bloqueio preventivo da transação e revisão manual por um analista.
+                This transaction's patterns match known fraudulent behaviors. 
+                * **Suggested Action:** Preventative block and manual review by an analyst.
                 """)
             else:
-                st.success("✅ **OPERAÇÃO SEGURA: BAIXO RISCO**")
+                st.success("✅ **SAFE OPERATION: LOW RISK**")
                 st.markdown("""
-                A transação cumpre com os parâmetros normais de segurança operativa.
-                * **Ação sugerida:** Aprovar processamento.
+                The transaction meets normal operational security parameters.
+                * **Suggested Action:** Approve processing.
                 """)
