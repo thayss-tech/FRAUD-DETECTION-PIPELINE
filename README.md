@@ -160,8 +160,10 @@ The predictive engine is deployed via Streamlit Community Cloud, utilizing:
 
 | Platform | Profile | Action |
 | :--- | :--- | :--- |
-| **LinkedIn** | Milton Mamani | [View Profile](https://www.linkedin.com/in/milton-mamani-1369a537b) |
-| **GitHub** | thayss-tech | [Explore Repos](https://github.com/thayss-tech) |
+| **🌐 Portfolio** | My Personal Website | [Visit Website](https://thayss-tech.github.io/PROFESSIONAL-WEBSITE/) |
+| **💼 LinkedIn** | Milton Mamani | [View Profile](https://www.linkedin.com/in/milton-mamani-1369a537b) |
+| **💻 GitHub** | thayss-tech | [Explore Repos](https://github.com/thayss-tech) |
+| **📧 Email** | Contact Me | [Send Message](mailto:miltonmau14@gmail.com) |
 
 <br />
 
